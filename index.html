@@ -16,8 +16,23 @@
   <div id="result">Esperando escaneo...</div>
 
   <script>
+    const GLIDE_BASE = "https://la-fulana-oficial-clpa.glide.page/"; // tu URL de Glide
+    const PARAM_NAME = "qr"; // nombre del parámetro que vas a usar en Glide
+
     function onScanSuccess(decodedText, decodedResult) {
+      // Detener escaneo
+      try { html5QrcodeScanner.clear().catch(()=>{}); } catch(e){}
+
+      // Mostrar QR escaneado en pantalla
       document.getElementById("result").innerText = "QR escaneado: " + decodedText;
+
+      // Crear URL de redirección con Query Param
+      const targetUrl = GLIDE_BASE + "?" + encodeURIComponent(PARAM_NAME) + "=" + encodeURIComponent(decodedText);
+
+      // Redirigir automáticamente a Glide
+      setTimeout(() => {
+        window.location.href = targetUrl;
+      }, 600); // 0.6s para que el staff vea el QR antes de ir a Glide
     }
 
     function onScanFailure(error) {
@@ -32,7 +47,4 @@
   </script>
 </body>
 </html>
-
-
-
 
