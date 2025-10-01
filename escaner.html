@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Escáner QR</title>
-  <script src="https://unpkg.com/html5-qrcode"></script>
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <style>
     body { font-family: sans-serif; text-align: center; margin: 20px; }
     #reader { width: 100%; max-width: 400px; margin: auto; }
@@ -17,16 +17,20 @@
 
   <script>
     function onScanSuccess(decodedText, decodedResult) {
-      // Mostramos el valor del QR
       document.getElementById("result").innerText = "QR escaneado: " + decodedText;
-      // Aquí el guardia puede ver el QR y luego tocar "Validar entrada" en Glide
-      // En Glide Free no podemos mandarlo directo a la columna, pero el guardia solo copia o lo ve
+    }
+
+    function onScanFailure(error) {
+      // No hacemos nada con fallos de escaneo
     }
 
     let html5QrcodeScanner = new Html5QrcodeScanner(
-      "reader", { fps: 10, qrbox: 250 }
+      "reader",
+      { fps: 10, qrbox: 250 }
     );
-    html5QrcodeScanner.render(onScanSuccess);
+    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
   </script>
 </body>
 </html>
+
+
