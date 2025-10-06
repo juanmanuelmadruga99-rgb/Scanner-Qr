@@ -16,35 +16,29 @@
   <div id="result">Esperando escaneo...</div>
 
   <script>
-    const GLIDE_BASE = "https://la-fulana-oficial-clpa.glide.page/"; // tu URL de Glide
-    const PARAM_NAME = "qr"; // nombre del parámetro que vas a usar en Glide
+    const GLIDE_BASE = "https://la-fulana-oficial-clpa.glide.page/"; // Tu URL de Glide
+    const PARAM_NAME = "qr"; // Nombre del parámetro que leerá Glide
 
     function onScanSuccess(decodedText, decodedResult) {
-      // Detener escaneo
+      // Detenemos el escaneo
       try { html5QrcodeScanner.clear().catch(()=>{}); } catch(e){}
 
-      // Mostrar QR escaneado en pantalla
+      // Mostramos el QR en pantalla
       document.getElementById("result").innerText = "QR escaneado: " + decodedText;
 
-      // Crear URL de redirección con Query Param
+      // Redirigimos a Glide con el QR como parámetro
       const targetUrl = GLIDE_BASE + "?" + encodeURIComponent(PARAM_NAME) + "=" + encodeURIComponent(decodedText);
-
-      // Redirigir automáticamente a Glide
       setTimeout(() => {
         window.location.href = targetUrl;
-      }, 600); // 0.6s para que el staff vea el QR antes de ir a Glide
+      }, 600);
     }
 
     function onScanFailure(error) {
-      // No hacemos nada con fallos de escaneo
+      // No hacemos nada si no detecta nada
     }
 
-    let html5QrcodeScanner = new Html5QrcodeScanner(
-      "reader",
-      { fps: 10, qrbox: 250 }
-    );
+    let html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
   </script>
 </body>
 </html>
-
